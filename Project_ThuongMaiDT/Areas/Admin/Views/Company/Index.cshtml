@@ -1,0 +1,72 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layoutadmin.cshtml";
+}
+
+<div class="card shadow border-0 my-4">
+    <div class=" card-header bg-secondary bg-gradient py-3">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="text-white py-2 ">Company List</h2>
+            </div>
+        </div>
+    </div>
+    <div class="card-body p-4">
+            <div class="row pb-3">
+                <div class="col-6">
+
+                </div>
+                <div class="col-6 text-end">
+                    <a asp-controller="Company" asp-action="Upsert" class="btn btn-primary">
+                        create new company <i class="bi bi-plus-square"></i>
+                    </a>
+
+                </div>
+            </div>
+            <table id="tblData" class="table table-bordered table-striped" style= "width: 100%">
+                <thead>
+                    <tr>
+                        <th>
+                            Name
+                        </th>
+                        <th>
+                            Address
+                        </th>
+                        <th>
+                            City
+                        </th>
+                        <th>
+                            State
+                        </th>
+                        <th>
+                            Phone Number
+                        </th>
+                        <th>
+
+                        </th>
+                    </tr>
+                </thead>
+            </table>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/js/company.js"></script>
+}
+<div class="modal fade" id="companyDetailModal" tabindex="-1" aria-labelledby="companyDetailModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content rounded-lg">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="companyDetailModalLabel">Company Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <div class="spinner-border text-primary d-none" role="status" id="loadingSpinner">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

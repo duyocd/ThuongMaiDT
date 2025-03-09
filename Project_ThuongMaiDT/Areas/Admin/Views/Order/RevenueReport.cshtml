@@ -1,0 +1,7 @@
+﻿@model List<decimal>
+
+@{
+    decimal totalRevenue = Model.Sum();
+}
+
+<h1>Total Revenue: @totalRevenue.ToString("C")</h1>

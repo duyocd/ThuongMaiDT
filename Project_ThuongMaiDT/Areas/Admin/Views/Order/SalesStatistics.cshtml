@@ -1,0 +1,117 @@
+﻿@model decimal
+@using Newtonsoft.Json
+@{
+    ViewBag.Title = "Thống kê Doanh Thu";
+    Layout = "~/Views/Shared/_Layoutadmin.cshtml";
+}
+
+<h2>Thống kê Doanh Thu Theo Tháng</h2>
+
+<!-- Form nhập khoảng tháng -->
+<form method="get" class="d-flex flex-wrap align-items-center gap-2">
+    <label for="startMonth">Từ:</label>
+    <select id="startMonth" name="startMonth" class="form-select form-select-sm w-auto">
+        @for (int i = 1; i <= 12; i++)
+        {
+            <option value="@i" selected="@(i == ViewBag.StartMonth)">@i</option>
+        }
+    </select>
+
+    <select id="startYear" name="startYear" class="form-select form-select-sm w-auto">
+        @for (int i = DateTime.Now.Year - 5; i <= DateTime.Now.Year; i++)
+        {
+            <option value="@i" selected="@(i == ViewBag.StartYear)">@i</option>
+        }
+    </select>
+
+    <label for="endMonth">Đến:</label>
+    <select id="endMonth" name="endMonth" class="form-select form-select-sm w-auto">
+        @for (int i = 1; i <= 12; i++)
+        {
+            <option value="@i" selected="@(i == ViewBag.EndMonth)">@i</option>
+        }
+    </select>
+
+    <select id="endYear" name="endYear" class="form-select form-select-sm w-auto">
+        @for (int i = DateTime.Now.Year - 5; i <= DateTime.Now.Year; i++)
+        {
+            <option value="@i" selected="@(i == ViewBag.EndYear)">@i</option>
+        }
+    </select>
+
+    <button type="submit" class="btn btn-primary btn-sm">Lọc</button>
+</form>
+
+
+
+
+<!-- Biểu đồ doanh thu -->
+<canvas id="revenueChart" style="max-width: 100%; height: 300px;"></canvas>
+
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var ctx = document.getElementById('revenueChart').getContext('2d');
+
+            var labels = @Html.Raw(JsonConvert.SerializeObject(ViewBag.Labels));
+            var data = @Html.Raw(JsonConvert.SerializeObject(ViewBag.Data));
+
+            console.log("Labels:", labels);
+            console.log("Data:", data);
+
+            if (labels.length === 0 || data.length === 0) {
+                document.getElementById('revenueChart').style.display = 'none';
+                console.warn("Không có dữ liệu để hiển thị biểu đồ.");
+                return;
+            }
+
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Doanh thu (VNĐ)',
+                        data: data,
+                        backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    layout: {
+                        padding: 10
+                    },
+                    plugins: {
+                        legend: {
+                            labels: {
+                                font: {
+                                    size: 12 // Giảm kích thước chữ trong chú thích
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                font: {
+                                    size: 12 // Giảm kích thước chữ trên trục y
+                                }
+                            }
+                        },
+                        x: {
+                            ticks: {
+                                font: {
+                                    size: 12 // Giảm kích thước chữ trên trục x
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+}
