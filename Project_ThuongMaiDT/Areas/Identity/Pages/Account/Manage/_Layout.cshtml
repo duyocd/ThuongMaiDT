@@ -1,7 +1,14 @@
-﻿@{
-    if (ViewData.TryGetValue("ParentLayout", out var parentLayout) && parentLayout !=  null)
+﻿@using Microsoft.AspNetCore.Identity
+@inject UserManager<IdentityUser> UserManager
+@inject SignInManager<IdentityUser> SignInManager
+
+@{
+    var user = await UserManager.GetUserAsync(User);
+    var roles = await UserManager.GetRolesAsync(user);
+
+    if (roles.Contains("Admin"))
     {
-        Layout = parentLayout.ToString();
+        Layout = "/Views/Shared/_Layoutadmin.cshtml";
     }
     else
     {

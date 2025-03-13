@@ -129,72 +129,79 @@
     </div>
 </section>
 <section id="best-selling-items" class="position-relative padding-large ">
-      <div class="container">
+    <div class="container">
         <div class="section-title d-md-flex justify-content-between align-items-center mb-4">
-          <h3 class="d-flex align-items-center">Best selling items</h3>
-          <a asp-area="Customer" asp-controller="Home" asp-action="Index" class="btn">View All</a>
+            <h3 class="d-flex align-items-center">Best selling items</h3>
+            <a asp-area="Customer" asp-controller="Home" asp-action="Index" class="btn">View All</a>
         </div>
         <div class="position-absolute top-50 end-0 pe-0 pe-xxl-5 me-0 me-xxl-5 swiper-next product-slider-button-next" tabindex="0" role="button" aria-label="Next slide" aria-controls="swiper-wrapper-2aba4a0aa84f2bf3" aria-disabled="false">
-          <svg class="chevron-forward-circle d-flex justify-content-center align-items-center p-2" width="80" height="80">
-            <use xlink:href="#alt-arrow-right-outline"></use>
-          </svg>
+            <svg class="chevron-forward-circle d-flex justify-content-center align-items-center p-2" width="80" height="80">
+                <use xlink:href="#alt-arrow-right-outline"></use>
+            </svg>
         </div>
         <div class="position-absolute top-50 start-0 ps-0 ps-xxl-5 ms-0 ms-xxl-5 swiper-prev product-slider-button-prev" tabindex="0" role="button" aria-label="Previous slide" aria-controls="swiper-wrapper-2aba4a0aa84f2bf3" aria-disabled="false">
-          <svg class="chevron-back-circle d-flex justify-content-center align-items-center p-2" width="80" height="80">
-            <use xlink:href="#alt-arrow-left-outline"></use>
-          </svg>
+            <svg class="chevron-back-circle d-flex justify-content-center align-items-center p-2" width="80" height="80">
+                <use xlink:href="#alt-arrow-left-outline"></use>
+            </svg>
         </div>
         <div class="swiper product-swiper swiper-initialized swiper-horizontal swiper-backface-hidden">
-          <div class="swiper-wrapper" id="swiper-wrapper-2aba4a0aa84f2bf3" aria-live="polite" style="transition-duration: 0ms; transform: translate3d(-238.667px, 0px, 0px); transition-delay: 0ms;">
-                        @foreach (var item in Model)
-            {
-            <div class="swiper-slide swiper-slide-active" role="group" aria-label="2 / 6" style="width: 218.667px; margin-right: 20px;">
-              <div class="card position-relative p-4 border rounded-3">
-                <img src="@item.ImageUrl" class="img-fluid shadow-sm" alt="product item">
-                <h6 class="mt-4 mb-0 fw-bold"><a href="index.html">"@item.Title</a></h6>
-                <div class="review-content d-flex">
-                  <p class="my-2 me-2 fs-6 text-black-50">@item.Author</p>
-                  <div class="rating text-warning d-flex align-items-center">
-                    <svg class="star star-fill">
-                      <use xlink:href="#star-fill"></use>
-                    </svg>
-                    <svg class="star star-fill">
-                      <use xlink:href="#star-fill"></use>
-                    </svg>
-                    <svg class="star star-fill">
-                      <use xlink:href="#star-fill"></use>
-                    </svg>
-                    <svg class="star star-fill">
-                      <use xlink:href="#star-fill"></use>
-                    </svg>
-                    <svg class="star star-fill">
-                      <use xlink:href="#star-fill"></use>
-                    </svg>
-                  </div>
-                </div>
-                <span class="price text-primary fw-bold mb-2 fs-5">@item.Price</span>
-                <div class="card-concern position-absolute start-0 end-0 d-flex gap-2">
-                  <button type="button" href="#" class="btn btn-dark" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Tooltip on top">
-                    <svg class="cart">
-                      <use xlink:href="#cart"></use>
-                    </svg>
-                  </button>
-                  <a asp-action="Details"
-                                               asp-route-productId="@item.Id" class="btn btn-dark">
-                                                <span>
-                                                    <svg class="wishlist">
-                                                        <use xlink:href="#heart"></use>
-                                                    </svg>
-                                                </span>
-                                            </a>
-                </div>
-              </div>
+            <div class="swiper-wrapper" id="swiper-wrapper-2aba4a0aa84f2bf3" aria-live="polite" style="transition-duration: 0ms; transform: translate3d(-238.667px, 0px, 0px); transition-delay: 0ms;">
+                @foreach (var item in Model)
+                {
+                    <div class="swiper-slide swiper-slide-active" role="group" aria-label="2 / 6" style="width: 218.667px; margin-right: 20px;">
+                        <div class="card position-relative p-4 border rounded-3">
+                            <img src="@item.ImageUrl" class="img-fluid shadow-sm" alt="product item">
+                            <h6 class="mt-4 mb-0 fw-bold"><a href="index.html">"@item.Title</a></h6>
+                            <div class="review-content d-flex">
+                                <p class="my-2 me-2 fs-6 text-black-50">@item.Author</p>
+                                <div class="rating text-warning d-flex align-items-center">
+                                    <svg class="star star-fill">
+                                        <use xlink:href="#star-fill"></use>
+                                    </svg>
+                                    <svg class="star star-fill">
+                                        <use xlink:href="#star-fill"></use>
+                                    </svg>
+                                    <svg class="star star-fill">
+                                        <use xlink:href="#star-fill"></use>
+                                    </svg>
+                                    <svg class="star star-fill">
+                                        <use xlink:href="#star-fill"></use>
+                                    </svg>
+                                    <svg class="star star-fill">
+                                        <use xlink:href="#star-fill"></use>
+                                    </svg>
+                                </div>
+                            </div>
+                            <span class="price text-primary fw-bold mb-2 fs-5">@item.Price</span>
+                            <div class="card-concern position-absolute start-0 end-0 d-flex gap-2">
+                                <button type="button" href="#" class="btn btn-dark" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Tooltip on top">
+                                    <svg class="cart">
+                                        <use xlink:href="#cart"></use>
+                                    </svg>
+                                </button>
+                                <a asp-action="Details"
+                                   asp-route-productId="@item.Id" class="btn btn-dark">
+                                    <span>
+                                        <svg class="wishlist">
+                                            <use xlink:href="#heart"></use>
+                                        </svg>
+                                    </span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                }
+
             </div>
-
-            }
-
-          </div>
-        <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span></div>
-      </div>
+            <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span>
+        </div>
+    </div>
 </section>
 
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
+}

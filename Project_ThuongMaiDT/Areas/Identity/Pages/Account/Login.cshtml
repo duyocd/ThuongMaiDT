@@ -1,12 +1,12 @@
 ﻿@page
 @model LoginModel
 
-
+<div class="container">
 <div class="card shadow border-o mt-4">
     <div class="card-header bg-secondary bg-gradient m-lg-0 py-4">
         <div class="row">
             <div class="col-12 text-center">
-                <h2 class="py-2 text-white">Login</h2>
+                <h2 class="py-2" style="color: #F86D72 ">Đăng nhập</h2>
 
             </div>
         </div>
@@ -16,7 +16,6 @@
             <div class="col-md-12">
                 <section>
                     <form id="account" method="post">
-                        <h3 class="border-bottom pb-3 mb-4 text-secondary text-center">Use a local account to log in.</h3>
                         <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
                         <div class="form-floating mb-3">
                             <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
@@ -35,17 +34,17 @@
                             </label>
                         </div>
                         <div>
-                            <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Log in</button>
+                            <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Đăng nhập</button>
                         </div>
                         <div class="d-flex justify-content-between pt-2">
                             <p>
-                                <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
+                                <a id="forgot-password" asp-page="./ForgotPassword">Quên mật khẩu?</a>
                             </p>
                             <p>
-                                <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
+                                <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Đăng ký tài khoản</a>
                             </p>
                             <p>
-                                <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Resend email confirmation</a>
+                                <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Xác nhận email</a>
                             </p>
                         </div>
                     </form>
@@ -53,7 +52,8 @@
             </div>
             <div class="col-md-12 pb-3 text-center">
                 <section>
-                    <p class="divider-text d-flex pt-3">or</p>
+                        <p class="divider-text d-flex justify-content-center w-100 pt-3">Hoặc</p>
+
                     @{
                         if ((Model.ExternalLogins?.Count ?? 0) == 0)
                         {
@@ -84,6 +84,7 @@
             </div>
         </div>
     </div>
+ </div>
  </div>
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

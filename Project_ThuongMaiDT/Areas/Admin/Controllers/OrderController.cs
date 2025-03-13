@@ -201,8 +201,14 @@ namespace Project_ThuongMaiDT.Areas.Admin.Controllers
 
             return View(orderHeaderId);
         }
+        [Authorize(Roles = SD.Role_Admin + "," + SD.Role_Employee)]
         public IActionResult SalesStatistics(int? startMonth, int? startYear, int? endMonth, int? endYear)
         {
+            if (!User.IsInRole(SD.Role_Admin) && !User.IsInRole(SD.Role_Employee))
+            {
+                TempData["ErrorMessage"] = "Bạn không có quyền truy cập trang này.";
+                return RedirectToAction("Index", "TopSellingBooks"); // Chuyển hướng về trang chủ
+            }
             DateTime today = DateTime.Today;
             DateTime defaultStart = new DateTime(today.Year, today.Month, 1).AddMonths(-6); // Mặc định 7 tháng gần nhất
             DateTime defaultEnd = new DateTime(today.Year, today.Month, DateTime.DaysInMonth(today.Year, today.Month));

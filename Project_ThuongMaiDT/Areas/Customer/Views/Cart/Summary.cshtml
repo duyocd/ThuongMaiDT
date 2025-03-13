@@ -1,18 +1,19 @@
 ﻿@model ShoppingCartVM
 <form method="post">
 	<br />
+
 	<div class="container">
 		<div class="card shadow border-0">
 
 			<div class="card-header bg-secondary bg-gradient text-light ml-0 py-4">
 				<div class="row px-4">
 					<div class="col-6">
-						<h5 class="pt-2 text-white">
-							Order Summary
+						<h5 class="pt-2 text-primary mb-3">
+							Tóm tắt đơn hàng
 						</h5>
 					</div>
 					<div class="col-6 text-end">
-						<a asp-action="Index" class="btn btn-outline-danger btn-sm">Back to Cart</a>
+						<a asp-action="Index" class="btn btn-outline-danger btn-sm">Quay lại giỏ hàng</a>
 					</div>
 				</div>
 			</div>
@@ -22,12 +23,12 @@
 						<div class="col-12 col-lg-6 pb-4">
 							<div class="row">
 								<h4 class="d-flex justify-content-between align-items-center mb-3">
-									<span class="text-info">Shipping Details:</span>
+									<span class="text-info">Chi tiết giao hàng:</span>
 								</h4>
 							</div>
 							<div class="row my-1">
 								<div class="col-3">
-									<label>Name</label>
+									<label>Tên</label>
 								</div>
 								<div class="col-9">
 									<input asp-for="OrderHeader.Name" class="form-control" />
@@ -36,7 +37,7 @@
 							</div>
 							<div class="row my-1">
 								<div class="col-3">
-									<label>Phone</label>
+									<label>Điện thoại</label>
 								</div>
 								<div class="col-9">
 									<input asp-for="OrderHeader.PhoneNumber" class="form-control" />
@@ -45,7 +46,7 @@
 							</div>
 							<div class="row my-1">
 								<div class="col-3">
-									<label>Street Address</label>
+									<label>Địa chỉ đường</label>
 								</div>
 								<div class="col-9">
 									<input asp-for="OrderHeader.StreetAddress" class="form-control" />
@@ -54,7 +55,7 @@
 							</div>
 							<div class="row my-1">
 								<div class="col-3">
-									<label>City</label>
+									<label>Thành phố</label>
 								</div>
 								<div class="col-9">
 									<input asp-for="OrderHeader.City" class="form-control" />
@@ -63,7 +64,7 @@
 							</div>
 							<div class="row my-1">
 								<div class="col-3">
-									<label>State</label>
+									<label>Tỉnh/Bang</label>
 								</div>
 								<div class="col-9">
 									<input asp-for="OrderHeader.State" class="form-control" />
@@ -72,7 +73,7 @@
 							</div>
 							<div class="row my-1">
 								<div class="col-3">
-									<label>Postal Code</label>
+									<label>Mã bưu điện</label>
 								</div>
 								<div class="col-9">
 									<input asp-for="OrderHeader.PostalCode" class="form-control" />
@@ -82,21 +83,22 @@
 						</div>
 						<div class="col-12 col-lg-5 offset-lg-1">
 							<h4 class="d-flex justify-content-between align-items-center mb-3">
-								<span class="text-info">Order Summary:</span>
+								<span class="text-info">Tóm tắt đơn hàng:</span>
 							</h4>
 							<ul class="list-group mb-3">
-								@foreach(var details in Model.ShoppingCartList){
-								<li class="list-group-item d-flex justify-content-between">
-									<div>
+								@foreach (var details in Model.ShoppingCartList)
+								{
+									<li class="list-group-item d-flex justify-content-between">
+										<div>
 											<h6 class="my-0">@details.Product.Title</h6>
-											<small class="text-muted">Quantity: @details.Count</small>
-									</div>
-									<span class="text-muted">@((details.Price*details.Count).ToString("c")) </span>
-								</li>
+											<small class="my-0">Số lượng: @details.Count</small>
+										</div>
+										<span class="text-info">@((details.Price * details.Count).ToString("c")) </span>
+									</li>
 								}
 
 								<li class="list-group-item d-flex justify-content-between bg-light">
-									<small class="text-info">Total (USD)</small>
+									<small class="text-info">Tổng (USD)</small>
 									<strong class="text-info">@Model.OrderHeader.OrderTotal.ToString("c")</strong>
 								</li>
 							</ul>
@@ -108,12 +110,12 @@
 				<div class="row">
 					<div class="col-12 col-md-8 pt-2">
 						<p style="color:maroon; font-size:14px;">
-							Estimate Arrival Date:
+							Ngày dự kiến giao hàng:
 							@DateTime.Now.AddDays(7).ToShortDateString() - @DateTime.Now.AddDays(14).ToShortDateString()
 						</p>
 					</div>
 					<div class="col-12 col-md-4">
-						<button type="submit" value="Place Order" class="btn btn-primary form-control">Place Order</button>
+						<button type="submit" value="Đặt hàng" class="btn btn-primary form-control">Đặt hàng</button>
 					</div>
 				</div>
 			</div>

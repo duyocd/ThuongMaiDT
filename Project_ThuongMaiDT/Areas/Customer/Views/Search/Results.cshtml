@@ -1,0 +1,21 @@
+﻿@model IEnumerable<TMDT.Models.Product>;
+
+<h2>Search Results</h2>
+
+@if (!Model.Any())
+{
+    <p>No results found for your query.</p>
+}
+else
+{
+    <ul>
+        @foreach (var product in Model)
+        {
+            <li>
+                <h3>@product.Title</h3>
+                <p>@product.Description</p>
+                <p>Price: @product.Price</p>
+            </li>
+        }
+    </ul>
+}

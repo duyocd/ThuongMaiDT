@@ -105,7 +105,7 @@ namespace Project_ThuongMaiDT.Areas.Customer.Controllers
 			}
 			_unitOfWork.OrderHeader.Add(ShoppingCartVM.OrderHeader);
             _unitOfWork.Save();
-            foreach (var cart in ShoppingCartVM.ShoppingCartList) 
+            foreach (var cart in ShoppingCartVM.ShoppingCartList)
             {
                 OrderDetail order = new()
                 {
@@ -115,44 +115,50 @@ namespace Project_ThuongMaiDT.Areas.Customer.Controllers
                     Count = cart.Count,
                 };
                 _unitOfWork.OrderDetail.Add(order);
-                _unitOfWork.Save();
-				if (applicationUser.CompanyId.GetValueOrDefault() == 0)
-				{
-                    var domain = Request.Scheme + "://" + Request.Host.Value + '/';
-					var options = new Stripe.Checkout.SessionCreateOptions
-					{
-						SuccessUrl = domain + $"customer/cart/OrderConfirmation?id={ShoppingCartVM.OrderHeader.Id}",
-						CancelUrl = domain + "customer/cart/index",
-						LineItems = new List<Stripe.Checkout.SessionLineItemOptions>(),
-						Mode = "payment",
-					};
-                    foreach(var item in ShoppingCartVM.ShoppingCartList)
-                    {
-                        var SessionLineItem = new Stripe.Checkout.SessionLineItemOptions
-                        {
-                            PriceData = new Stripe.Checkout.SessionLineItemPriceDataOptions
-                            {
-                                UnitAmount = (long)(item.Price * 100),
-                                Currency = "usd",
-                                ProductData = new Stripe.Checkout.SessionLineItemPriceDataProductDataOptions
-                                {
-                                    Name = item.Product.Title
-                                }
-                            },
-                            Quantity = item.Count
-                        };
-                        options.LineItems.Add(SessionLineItem);
-					}
-					var service = new Stripe.Checkout.SessionService();
-					Session session = service.Create(options);
-                    _unitOfWork.OrderHeader.UpdateStripePaymentID(ShoppingCartVM.OrderHeader.Id, session.Id, session.PaymentIntentId);
-                    _unitOfWork.Save();
-                    Response.Headers.Add("Location", session.Url);
-                    return new StatusCodeResult(303);
-				}
+            }
 
-			}
-			return RedirectToAction(nameof(OrderConfirmation), new {id = ShoppingCartVM.OrderHeader.Id});
+            // Lưu tất cả OrderDetail một lần
+            _unitOfWork.Save();
+
+            if (applicationUser.CompanyId.GetValueOrDefault() == 0)
+            {
+                var domain = Request.Scheme + "://" + Request.Host.Value + '/';
+                var options = new Stripe.Checkout.SessionCreateOptions
+                {
+                    SuccessUrl = domain + $"customer/cart/OrderConfirmation?id={ShoppingCartVM.OrderHeader.Id}",
+                    CancelUrl = domain + "customer/cart/index",
+                    LineItems = new List<Stripe.Checkout.SessionLineItemOptions>(),
+                    Mode = "payment",
+                };
+
+                foreach (var item in ShoppingCartVM.ShoppingCartList)
+                {
+                    var SessionLineItem = new Stripe.Checkout.SessionLineItemOptions
+                    {
+                        PriceData = new Stripe.Checkout.SessionLineItemPriceDataOptions
+                        {
+                            UnitAmount = (long)(item.Price * 100),
+                            Currency = "usd",
+                            ProductData = new Stripe.Checkout.SessionLineItemPriceDataProductDataOptions
+                            {
+                                Name = item.Product.Title
+                            }
+                        },
+                        Quantity = item.Count
+                    };
+                    options.LineItems.Add(SessionLineItem);
+                }
+
+                var service = new Stripe.Checkout.SessionService();
+                Session session = service.Create(options);
+                _unitOfWork.OrderHeader.UpdateStripePaymentID(ShoppingCartVM.OrderHeader.Id, session.Id, session.PaymentIntentId);
+                _unitOfWork.Save();
+
+                Response.Headers.Add("Location", session.Url);
+                return new StatusCodeResult(303);
+            }
+
+            return RedirectToAction(nameof(OrderConfirmation), new {id = ShoppingCartVM.OrderHeader.Id});
 		}
 		public IActionResult OrderConfirmation(int id)
 		{
