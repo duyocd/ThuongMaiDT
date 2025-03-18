@@ -19,6 +19,8 @@ namespace TMDT.DataAccess.Repository
         public IShoppingCartRepository ShoppingCart { get; private set; }
         public IOrderHeaderRepository OrderHeader { get; private set; }
         public IOrderDetailRepository OrderDetail { get; private set; }
+        public IRecommendationRepository Recommendation { get; private set; } // ✅ Thêm mới
+
         public UnitOfWork(ApplicationDbContext db)
         {
             _db = db;
@@ -29,12 +31,12 @@ namespace TMDT.DataAccess.Repository
             Company = new CompanyRepository(_db);
             OrderHeader = new OrderHeaderRepository(_db);
             OrderDetail = new OrderDetailRepository(_db);
+            Recommendation = new RecommendationRepository(_db); // ✅ Khởi tạo
         }
 
         public void Save()
         {
             _db.SaveChanges();
-
         }
     }
 }

@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Authorization;
+Ôªøusing Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using System.Security.Claims;
@@ -13,7 +13,7 @@ namespace Project_ThuongMaiDT.Areas.Customer.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly IUnitOfWork _unitOfWork; //thuÙ?c ti?nh cu?a class na?y 
+        private readonly IUnitOfWork _unitOfWork; //thu√¥?c ti?nh cu?a class na?y 
 
         public HomeController(ILogger<HomeController> logger, IUnitOfWork unitOfWork)
         {
@@ -73,14 +73,29 @@ namespace Project_ThuongMaiDT.Areas.Customer.Controllers
 
         public IActionResult Details(int productId)
         {
+            var product = _unitOfWork.Product.Get(u => u.Id == productId, includeProperties: "Category");
+
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            var recommendedProductIds = _unitOfWork.Recommendation.GetRecommendedProducts(productId);
+            var recommendedProducts = _unitOfWork.Product.GetAll(u => recommendedProductIds.Contains(u.Id)).ToList();
+
             ShoppingCart cart = new()
             {
-                Product = _unitOfWork.Product.Get(u => u.Id == productId, includeProperties: "Category"),
+                Product = product,
                 Count = 1,
                 ProductId = productId,
             };
+
+            ViewBag.RecommendedProducts = recommendedProducts; // G·ª≠i danh s√°ch s·∫£n ph·∫©m g·ª£i √Ω ƒë·∫øn View
+
             return View(cart);
         }
+
+
         [HttpPost]
         [Authorize]
         public IActionResult Details(ShoppingCart shoppingCart)
@@ -93,13 +108,13 @@ namespace Project_ThuongMaiDT.Areas.Customer.Controllers
             if (cartFromDb != null)
             {
                 cartFromDb.Count += shoppingCart.Count;
-                //_unitOfWork.ShoppingCart.Update(shoppingCart); ?? ?‚y nÍ?u du?ng c‚?y na?y se? thÍm mÙ?t c?? s?? d?? liÍ?u m??i v??i ID m??i ta?i
-                //vi? khi thÍm 1 sa?n ph‚?m shoppongcart se? t?? sinh kho?a va? ta?o mÙ?t csdl m??i nh?ng ta chi? muÙ?n c‚?p nh‚?t mÙ?t csdl ta muÙ?n c‚?p nh‚?t ch?? khÙng c‚?n thÍm 
-                //d?? liÍ?u m??i
+                //_unitOfWork.ShoppingCart.Update(shoppingCart); ?? ?√¢y n√™?u du?ng c√¢?y na?y se? th√™m m√¥?t c?? s?? d?? li√™?u m??i v??i ID m??i ta?i
+                //vi? khi th√™m 1 sa?n ph√¢?m shoppongcart se? t?? sinh kho?a va? ta?o m√¥?t csdl m??i nh?ng ta chi? mu√¥?n c√¢?p nh√¢?t m√¥?t csdl ta mu√¥?n c√¢?p nh√¢?t ch?? kh√¥ng c√¢?n th√™m 
+                //d?? li√™?u m??i
                 _unitOfWork.ShoppingCart.Update(cartFromDb);
                 _unitOfWork.Save();
-                //vi?c khÙng c?n g?i ph??ng th?c Update l‡ do Entity Framework t? ??ng theo dıi c·c thay ??i ??i v?i c·c ??i t??ng ?„ n?p t? c? s? d? li?u
-                //v‡ s? ·p d?ng nh?ng thay ??i n‡y khi b?n l?u v‡o c? s? d? li?u b?ng c·ch g?i _unitOfWork.Save().
+                //vi?c kh√¥ng c?n g?i ph??ng th?c Update l√† do Entity Framework t? ??ng theo d√µi c√°c thay ??i ??i v?i c√°c ??i t??ng ?√£ n?p t? c? s? d? li?u
+                //v√† s? √°p d?ng nh?ng thay ??i n√†y khi b?n l?u v√†o c? s? d? li?u b?ng c√°ch g?i _unitOfWork.Save().
             }
             else
             {
@@ -108,7 +123,7 @@ namespace Project_ThuongMaiDT.Areas.Customer.Controllers
                 HttpContext.Session.SetInt32(SD.SessionCart,
                     _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == userId).Count());
             }
-            TempData["success"] = "Cart updated successfully";
+            TempData["success"] = "B·∫°n ƒë√£ th√™m v√†o gi·ªè h√†ng";
             return RedirectToAction(nameof(Index));
         }
         public IActionResult Privacy()

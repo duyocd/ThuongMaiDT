@@ -37,7 +37,7 @@ namespace Project_ThuongMaiDT.Areas.Admin.Controllers
             {
                 _unitOfWork.Category.Add(obj);
                 _unitOfWork.Save();
-                TempData["success"] = "Category create successfully";
+                TempData["success"] = "Đã tạo thể loại thành công";
                 return RedirectToAction("Index");
             }
             return View();
@@ -62,7 +62,7 @@ namespace Project_ThuongMaiDT.Areas.Admin.Controllers
             {
                 _unitOfWork.Category.Update(obj);
                 _unitOfWork.Save();
-                TempData["success"] = "Category update successfully";
+                TempData["success"] = "Đã cập nhật thể loại";
                 return RedirectToAction("Index");
             }
             return View();
@@ -86,7 +86,7 @@ namespace Project_ThuongMaiDT.Areas.Admin.Controllers
             if (obj == null) { return NotFound(); }
             _unitOfWork.Category.Remove(obj);
             _unitOfWork.Save();
-            TempData["success"] = "Category deleted successfully";
+            TempData["success"] = "Đã xóa thể loại thành công";
             return RedirectToAction("Index");
         }
     }
