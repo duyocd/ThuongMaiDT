@@ -8,6 +8,7 @@ using TMDT.DataAccess.Repository.IRepository;
 using Accord.MachineLearning.Rules;
 
 using Microsoft.EntityFrameworkCore;
+using TMDT.Utility;
 namespace TMDT.DataAccess.Repository
 {
     public class RecommendationRepository : IRecommendationRepository
@@ -23,7 +24,7 @@ namespace TMDT.DataAccess.Repository
         {
             // Truy vấn chỉ lấy OrderHeaderId và danh sách sản phẩm (tránh Include không cần thiết)
             var transactions = _db.OrderDetails
-                .Where(od => od.OrderHeaderId != null) // Đảm bảo không có OrderHeader null
+                .Where(od => od.OrderHeaderId != null && od.OrderHeader.OrderStatus == SD.StatusApproved && od.OrderHeader.PaymentStatus == SD.PaymentStatusApproved ) // Đảm bảo không có OrderHeader null
                 .GroupBy(od => od.OrderHeaderId)
                 .Where(g => g.Select(od => od.ProductId).Distinct().Count() > 1) // Chỉ lấy Order có nhiều hơn 1 sản phẩm
                 .Select(g => g.Select(od => od.ProductId).Distinct().ToArray()) // Chuyển mỗi nhóm thành 1 mảng sản phẩm

@@ -101,7 +101,7 @@ namespace Project_ThuongMaiDT.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
-            returnUrl ??= Url.Content("~/Admin/Order/SalesStatistics");
+            returnUrl ??= Url.Content("~/Admin/Admin/Index");
 
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 

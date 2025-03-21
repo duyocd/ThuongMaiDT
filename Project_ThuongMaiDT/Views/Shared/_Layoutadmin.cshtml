@@ -23,7 +23,7 @@
 <body>
     <!-- Navbar -->
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-        <a class="navbar-brand ps-3" asp-area="" asp-controller="Home" asp-action="Index">Start Bootstrap</a>
+        <a class="navbar-brand ps-3" asp-area="Admin" asp-controller="Admin" asp-action="Index">EcomBooks </a>
         <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle"><i class="fas fa-bars"></i></button>
         <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
             <li class="nav-item dropdown">
@@ -47,18 +47,35 @@
                 <div class="sb-sidenav-menu">
                     <div class="nav">
                         <div class="sb-sidenav-menu-heading">Core</div>
-                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">
+                        <a class="nav-link" asp-area="Admin" asp-controller="Admin" asp-action="Index">
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                             Dashboard
                         </a>
+
                         <div class="sb-sidenav-menu-heading">Interface</div>
-                        <a class="nav-link" asp-area="Admin" asp-controller="Company" asp-action="Index">
-                            <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                            Danh mục công ty
+                        <a class="nav-link" asp-area="Admin" asp-controller="Product" asp-action="Index">
+                            <div class="sb-nav-link-icon"><i class="bi bi-book"></i></div>
+                            Danh mục sản phẩm
                         </a>
                         <a class="nav-link" asp-area="Admin" asp-controller="Category" asp-action="Index">
                             <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
                             Danh mục thể loại
+                        </a>
+                        <a class="nav-link" asp-area="Admin" asp-controller="Company" asp-action="Index">
+                            <div class="sb-nav-link-icon"><i class="bi bi-building"></i></i></div>
+                            Danh mục công ty
+                        </a>
+                        <a class="nav-link" asp-area="Admin" asp-controller="Order" asp-action="Index">
+                            <div class="sb-nav-link-icon"><i class="bi bi-basket"></i></div>
+                            Xử Lý Đơn Hàng
+                        </a>
+                        <a class="nav-link" asp-area="Admin" asp-controller="Order" asp-action="SalesStatistics">
+                            <div class="sb-nav-link-icon"><i class="bi bi-bar-chart-line"></i></i></div>
+                            Thống kê doanh thu
+                        </a>
+                        <a class="nav-link" asp-area="Admin" asp-controller="Order" asp-action="SalesStatistics">
+                            <div class="sb-nav-link-icon"><i class="bi bi-bar-chart-line"></i></i></div>
+                            Thống kê doanh thu
                         </a>
                     </div>
                 </div>

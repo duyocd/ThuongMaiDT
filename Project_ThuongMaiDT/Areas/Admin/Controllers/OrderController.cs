@@ -63,7 +63,7 @@ namespace Project_ThuongMaiDT.Areas.Admin.Controllers
             _unitOfWork.OrderHeader.Update(orderHeaderFromDb);
             _unitOfWork.Save();
 
-            TempData["Success"] = "Order Details Updated Successfully.";
+            TempData["Success"] = "Chi tiết đơn hàng được cập nhật thành công.";
 
 
             return RedirectToAction(nameof(Details), new { orderId = orderHeaderFromDb.Id });
@@ -76,7 +76,7 @@ namespace Project_ThuongMaiDT.Areas.Admin.Controllers
         {
             _unitOfWork.OrderHeader.UpdateStatus(OrderVM.OrderHeader.Id, SD.StatusInProcess);
             _unitOfWork.Save();
-            TempData["Success"] = "Order Details Updated Successfully.";
+            TempData["Success"] = "Chi tiết đơn hàng được cập nhật thành công.";
             return RedirectToAction(nameof(Details), new { orderId = OrderVM.OrderHeader.Id });
         }
 
@@ -97,7 +97,7 @@ namespace Project_ThuongMaiDT.Areas.Admin.Controllers
 
             _unitOfWork.OrderHeader.Update(orderHeader);
             _unitOfWork.Save();
-            TempData["Success"] = "Order Shipped Successfully.";
+            TempData["Success"] = "Đơn hàng đã được vận chuyển thành công.";
             return RedirectToAction(nameof(Details), new { orderId = OrderVM.OrderHeader.Id });
         }
         [HttpPost]
@@ -125,7 +125,7 @@ namespace Project_ThuongMaiDT.Areas.Admin.Controllers
                 _unitOfWork.OrderHeader.UpdateStatus(orderHeader.Id, SD.StatusCancelled, SD.StatusCancelled);
             }
             _unitOfWork.Save();
-            TempData["Success"] = "Order Cancelled Successfully.";
+            TempData["Success"] = "Đơn hàng bị hủy thành công.";
             return RedirectToAction(nameof(Details), new { orderId = OrderVM.OrderHeader.Id });
 
         }
@@ -222,7 +222,7 @@ namespace Project_ThuongMaiDT.Areas.Admin.Controllers
                 : defaultEnd;
 
             var completedOrders = _unitOfWork.OrderHeader
-                .GetAll(u => u.OrderStatus == SD.StatusShipped && u.ShippingDate >= startDate && u.ShippingDate <= endDate)
+                .GetAll(u => u.OrderStatus == SD.StatusShipped && u.ShippingDate >= startDate && u.ShippingDate <= endDate && u.PaymentStatus == SD.PaymentStatusApproved)
                 .GroupBy(o => new { o.ShippingDate.Year, o.ShippingDate.Month }) // Nhóm theo tháng
                 .Select(g => new
                 {

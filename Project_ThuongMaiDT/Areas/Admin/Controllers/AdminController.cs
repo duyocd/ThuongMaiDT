@@ -21,7 +21,7 @@ public class AdminController : Controller
 
         if (!isAdmin)
         {
-            return Redirect("/Customer/Account/Login");
+            return Redirect("/Admin/Admin/Index");
         }
 
         return View();
